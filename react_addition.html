@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+    <title>Addition</title>
+    <style>
+        #app {
+            margin-top: 100px;
+        }
+
+        body {
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 5em;
+        }
+
+        input[type="text"] {
+            font-size: 1em;
+            text-align: center;
+            width: 4ch;
+            border-radius: 7px;
+            border-width: 6px;
+            margin-bottom: 0.4em;
+        }
+
+        .incorrect {
+            color: red
+        }
+
+        h6 {
+            margin: 0;
+            margin-top: 0.4em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+
+        function App() {
+
+            const [state, setState] = React.useState({
+                level: 1,
+                x: rng(1),
+                y: rng(1),
+                response: "",
+                score: 0,
+                incorrect: false
+            })
+
+            function setresponse(event) {
+                setState({
+                    ...state,
+                    response: event.target.value
+                })
+            }
+
+            function rng(level) {
+                return Math.ceil(Math.sqrt(Math.random()) * 5 * level)
+            }
+
+            function inputKeyPress(event) {
+                if (event.key === "Enter") {
+                    const answer = parseInt(state.response)
+                    if (state.x + state.y === answer) {
+                        setState({
+                            ...state,
+                            x: rng(state.level),
+                            y: rng(state.level),
+                            score: state.score + 1,
+                            response: "",
+                            incorrect: false,
+                            level: Math.floor((state.score + 1) / 5) + 1
+                        })
+                    } else {
+                        setState({
+                            ...state,
+                            score: state.score - 1,
+                            response: "",
+                            incorrect: true
+                        })
+                    }
+                }
+            }
+
+
+            return (
+                <div>
+                    <div id="question" className={state.incorrect ? "incorrect" : ""}>{state.x} + {state.y}</div>
+                    <input autoFocus="true" onKeyPress={inputKeyPress} onChange={setresponse} type="text" value={state.response}></input>
+                    <h6>Score</h6>
+                    <div>{state.score}</div>
+                    <h6>Level</h6>
+                    <div>{state.level}</div>
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, document.querySelector("#app"))
+    </script>
+</body>
+
+</html>
