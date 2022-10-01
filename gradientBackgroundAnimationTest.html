@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>Hello</title>
+        <style>
+            /*import poppins
+            */
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+            body{
+                margin:0;
+                color:white;
+                font-family: "poppins";
+                font-size: 3.6vw;
+            }
+            h1{
+                font-family: "poppins"; 
+                text-align: center;
+                margin: auto;
+                font-size: 7.6vw;
+                margin-inline: 1em;
+            }
+            h2{font-size: 3vw;}
+            button{
+                /*width:100px;
+                height:40px;
+                centered*/
+                margin: auto;
+
+            }
+            #app{
+                margin: 0;
+            }
+            div{
+                width:100vw;
+                height:100vh;
+            }
+            .yourturn-background{
+                background: linear-gradient(55deg, rgb(192, 45, 114) 0%,  rgb(251, 62, 62) 55%, rgb(255, 111, 0) 100%);
+            }
+            .yourteam-background{
+                background: linear-gradient(55deg, #ff9d00 0%,  rgb(246, 255, 0) 60%, rgb(0, 255, 251) 110%);
+            }
+            .notyourturn-background{
+                background: linear-gradient(55deg, rgb(0, 255, 255) 0%,  rgb(144, 0, 255) 60%, rgb(160, 44, 142) 110%);
+            }
+            .fullbg{
+                background: linear-gradient(55deg,rgb(192, 45, 114), rgb(251, 62, 62), rgb(255, 180, 0),rgb(246, 255, 0), rgb(0, 255, 191),rgb(186, 129, 255),rgb(255, 138, 193));
+                background-size: 300% 300%;/**/
+                /*animation: animate 8s ease 1;*/
+            }
+            .container{
+                width:100vw;
+                height:100vh;
+                display:flex;
+                flex-direction:column;
+                justify-content:center;
+                align-items:center;
+                justify-items: space-around;
+            }
+            button{
+                font-family: "poppins"; 
+                align-self: center;
+                width: 40vw; 
+                height: 10vw;
+                min-height: 6.7vmax; 
+                background-color:rgba(0, 0, 0, 0.55); 
+                color:white; 
+                z-index:999;
+                backdrop-filter: blur(5px);
+                font-size: 3.6vw;
+                border: none;
+                border-radius: 0.5em;
+                box-shadow: inset 0 3px 10px rgb(0 0 0 / 0.3);
+                margin: auto;
+            }
+            /*
+            background-position: 0% 100%;
+            background-position: 50% 50%;
+            background-position: 100% 0%;
+            */
+            
+
+            @keyframes animate-your-team{
+                0%{background-position: 0% 100%;}
+                100%{background-position: 50% 50%;}
+            }
+            @keyframes animate-your-not{
+                0%{background-position: 0% 100%;}
+                100%{background-position: 100% 0%;}
+            }
+            @keyframes animate-team-not{
+                0%{background-position: 50% 50%;}
+                100%{background-position: 100% 0%;}
+            }
+            @keyframes animate-team-your{
+                0%{background-position: 50% 50%;}
+                100%{background-position: 0% 100%;}
+            }
+            @keyframes animate-not-team{
+                0%{background-position: 100% 0%;}
+                100%{background-position: 50% 50%;}
+            }
+            @keyframes animate-not-your{
+                0%{background-position: 100% 0%;}
+                100%{background-position: 0% 100%;}
+            }
+
+            .animate-your-team{
+                background-position: 50% 50%;
+                animation: animate-your-team 4s ease 1;
+            }
+            .animate-your-not{
+                background-position: 100% 0%;
+                animation: animate-your-not 4s ease 1;
+            }
+            .animate-team-not{
+                background-position: 100% 0%;
+                animation: animate-team-not 4s ease 1;
+            }
+            .animate-team-your{
+                background-position: 0% 100%;
+                animation: animate-team-your 4s ease 1;
+            }
+            .animate-not-team{
+                background-position: 50% 50%;
+                animation: animate-not-team 4s ease 1;
+            }
+            .animate-not-your{
+                background-position: 0% 100%;
+                animation: animate-not-your 4s ease 1;
+            }
+
+            @keyframes animate{
+                0%{
+                    background-position: 0% 100%;
+                }
+                50%{
+                    background-position: 50% 50%;
+                }
+                100%{
+                    background-position: 100% 0%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script type="text/babel">
+            function App() {
+                const [state, setState] = React.useState(0);
+                const bgs = ["animate-your-team","animate-team-not","animate-not-team", "animate-team-your", "animate-your-not", "animate-not-your"];
+                const anims = ["animate your->team","animate team->not","animate not->team", "animate team->your", "animate your->not", "animate not->your"];
+                const texts = ["Your Team's Turn","Not Your Team's Turn","Your Team's Turn", "Your Turn", "Not Your Team's Turn", "Your Turn"];
+                //bgs[state]}
+                return (
+                    <div class={`container fullbg ${bgs[state]}`}>
+                    
+                    
+                        <h1>Gradient Background Animation Test</h1>
+                        <h1>{texts[state]}</h1>
+                        <button onClick={()=>{
+                            setState((state+1)%6)
+                            console.log((state+1)%6)
+                        }}><h2>{anims[(state+1)%6]}</h2></button>
+                        
+                    </div>
+                );
+            }
+
+            ReactDOM.render(<App />, document.querySelector("#app"));
+        </script>
+    </body>
+</html>
